@@ -5,21 +5,12 @@ button.addEventListener('click',onClick);
 function onClick(){
 document.getElementById("result").innerHTML ="you win";
 }
-function computerChoice(){
+function getcomputerChoice(){
     let compchoice = Math.floor(Math.random()*3);
-    if (compchoice ==0){
-        console.log("Rock");
-    }
-    else if(compchoice ==1){
-        console.log("Paper");
-    }
-    else{
-        console.log("Scissors");
-    }
 return compchoice;
 }
-function playRound(playerChoice){
-    let computerChoice =computerChoice();
+function playRound(compChoice, playerChoice){
+    compChoice =getcomputerChoice();
     if(compChoice ==playerChoice){
         return("Its a tie!");
     }
@@ -40,5 +31,32 @@ function playRound(playerChoice){
     }
     else{
         return("Pity :( Scissors cuts paper");
+    }
+}
+function game(){
+    console.log("Let the game BEGIN!");
+    for(let i=0; i<5; i++){
+        let comp = getcomputerChoice();
+        let player = prompt("What's your pick? Rock, Paper, or Scissors");
+        let playerchose;
+        if(player.toLowerCase() == "rock"){
+            playerchose=0;
+        }
+        else if(player.toLowerCase() == "paper"){
+            playerchose=1;
+        }
+        else if(player.toLowerCase() == "scissors"){
+            playerchose=2;
+        }
+        else{
+            playerchose =3;
+        }
+        if(playerchose==3){
+            console.log("im sorry, that's an invalid answer");
+            i--;
+        }
+        else{
+        console.log(playRound(comp,playerchose));
+        }
     }
 }
