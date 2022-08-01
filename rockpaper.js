@@ -2,14 +2,19 @@
 let playerscore=0;
 let computerscore=0;
 
-
 const container = document.querySelector('#container');
+
 let results = document.createElement('div');
 results.classList.add('results');
+container.appendChild(results);
 
+let scorekeeper = document.createElement('h2');
+scorekeeper.classList.add('scorekeeper');
+container.appendChild(scorekeeper);
+
+gamestart();
 
 const buttons = document.querySelectorAll('button');
-
 buttons.forEach((button)=>{
     button.addEventListener('click',()=>{
 playRound(button.id);
@@ -23,7 +28,11 @@ function getcomputerChoice(){
     let compchoice = Math.floor(Math.random()*3);
 return compchoice;
 }
+
 function playRound(playerChoice){
+    if(computerscore ==5 || playerscore ==5){
+        gamestart();
+    }
     compChoice =getcomputerChoice();
     let result;
     if(compChoice ==playerChoice){
@@ -53,39 +62,28 @@ function playRound(playerChoice){
         result="Pity :( Scissors cuts paper";
         ++computerscore;
     }
+    scorekeeper.textContent = `Your Score: ` + playerscore +
+    `   Computer Score: ` + computerscore;
     results.textContent = result;
-    container.appendChild(results);
-    console.log(result);
+    if(computerscore==5 || playerscore ==5 ){
+        gameend();
+    }
     return result;
 }
-function game(){
+
+function gamestart(){
     playerscore=0;
     computerscore=0;
-    console.log("Let the game BEGIN!");
-        let comp = getcomputerChoice();
-        let player = prompt("What's your pick? Rock, Paper, or Scissors");
-        let playerchose;
-        if(player.toLowerCase() == "rock"){
-            playerchose=0;
-        }
-        else if(player.toLowerCase() == "paper"){
-            playerchose=1;
-        }
-        else if(player.toLowerCase() == "scissors"){
-            playerchose=2;
-        }
-        else{
-            playerchose =3;
-        }
-        if(playerchose==3){
-            console.log("im sorry, that's an invalid answer");
-            i--;
-        }
-        else{
-        let statement = playRound(comp,playerchose);
-        console.log(statement);
-        if(statement == "Its a tie!"){
-            i--;
-        }
+    results.textContent = "Let the game BEGIN! Choose a button";
+    scorekeeper.textContent = `Your Score: ` + playerscore +
+    `   Computer Score: ` + computerscore;
+    }
+
+function gameend(){
+    if(computerscore >playerscore){
+        results.textContent = "You losee!! \Choose a button if you want redemption";
+    }
+    else{
+        results.textContent = "You win!!\n Choose a button if you wan to win again ;)";
     }
 }
