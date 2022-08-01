@@ -2,19 +2,28 @@
 let playerscore=0;
 let computerscore=0;
 
-let choice = document.querySelector('button')
-let button = document.querySelector('button')
-button.addEventListener('click',onClick)
+
+const container = document.querySelector('#container');
+let results = document.createElement('div');
+results.classList.add('results');
 
 
-function onClick(){
-document.getElementById("result").innerHTML ="you win";
-}
+const buttons = document.querySelectorAll('button');
+
+buttons.forEach((button)=>{
+    button.addEventListener('click',()=>{
+playRound(button.id);
+    },false);
+});
+
+
+
+
 function getcomputerChoice(){
     let compchoice = Math.floor(Math.random()*3);
 return compchoice;
 }
-function playRound(compChoice, playerChoice){
+function playRound(playerChoice){
     compChoice =getcomputerChoice();
     let result;
     if(compChoice ==playerChoice){
@@ -40,17 +49,19 @@ function playRound(compChoice, playerChoice){
         result="NICE! Rock beats Scissors :)";
         ++playerscore;
     }
-    else{
+    else if(compChoice ==2 && playerChoice ==1){
         result="Pity :( Scissors cuts paper";
         ++computerscore;
     }
+    results.textContent = result;
+    container.appendChild(results);
+    console.log(result);
     return result;
 }
 function game(){
     playerscore=0;
     computerscore=0;
     console.log("Let the game BEGIN!");
-    for(let i=0; i<5; i++){
         let comp = getcomputerChoice();
         let player = prompt("What's your pick? Rock, Paper, or Scissors");
         let playerchose;
@@ -75,8 +86,6 @@ function game(){
         console.log(statement);
         if(statement == "Its a tie!"){
             i--;
-        }
-        console.log(`Your Score: ` + playerscore + `\n Computer Score: ` + computerscore);
         }
     }
 }
